@@ -4,10 +4,10 @@ let circles = []
 
 function preload() {
   soundFormats('wav')
-  bd = loadSound('../assets/bd.wav')
+  bd = loadSound('assets/bd.wav')
   bd.setVolume(0.95)
   bd.playMode('restart')
-  sd = loadSound('../assets/sd.wav')
+  sd = loadSound('assets/sd.wav')
   sd.setVolume(0.95)
   sd.playMode('restart')
 }
