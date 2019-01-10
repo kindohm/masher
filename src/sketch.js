@@ -1,6 +1,7 @@
 let bd, sd
-let circleCount = 5
-let circles = []
+let colCount = 5
+let rowCount = 5
+let rows = []
 
 function preload() {
   soundFormats('wav')
@@ -13,29 +14,37 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640, 480)
+  createCanvas(640, 480, WEBGL)
 }
 
 function update() {
-  circles.forEach(circle => {
-    circle.x += circle.velocity.x
-    circle.y += Math.max(circle.velocity.y, -100)
-    circle.velocity.x += circle.acceleration.x
-    circle.velocity.y += circle.acceleration.y
-    circle.width *= Math.min(1 + circle.growth, 500)
-    circle.height *= Math.min(1 + circle.growth, 500)
+  rows.forEach(row => {
+    row.forEach(thing => {
+      thing.y += thing.velocity.y
+      thing.velocity.y += thing.acceleration.y
+    })
   })
 }
 
 function draw() {
   update()
-  clear()
-  circles.forEach(circle => {
-    const color = circle.color
-    stroke(color.blue, color.red, color.green)
-    fill(color.red, color.green, color.blue)
-    ellipse(circle.x, circle.y, circle.width, circle.height)
+  background('black')
+  directionalLight(250, 250, 250, 0.45, 0.25, -0.35)
+  translate((-colCount * 85) / 2, 0, -400)
+
+  rows.forEach(row => {
+    row.forEach(thing => {
+      const color = thing.color
+      noStroke()
+      ambientMaterial(color.red, color.green, color.blue)
+
+      translate(thing.x, thing.y, thing.z)
+      box(thing.width, thing.height, thing.width)
+      translate(-thing.x, -thing.y, -thing.z)
+    })
   })
+
+  translate((colCount * 85) / 2, 0, 400)
 }
 
 function getRandomArbitrary(min, max) {
@@ -45,36 +54,37 @@ function getRandomArbitrary(min, max) {
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function trigger() {
-  circles = Array(circleCount)
+  rows = Array(rowCount)
     .fill(null)
-    .map((val, index) => {
-      return {
-        x: index * (80 + 20) + 55,
-        y: 400,
-        width: 80,
-        height: 80,
-        velocity: {
-          x: 0,
-          y: 0
-        },
-        acceleration: {
-          x: 0,
-          y: getRandomArbitrary(-0.05, -0.3)
-        },
-        growth: getRandomArbitrary(0, 0.01),
-        color: {
-          red: getRandomIntInclusive(0, 255),
-          green: getRandomIntInclusive(0, 255),
-          blue: getRandomIntInclusive(0, 255)
-        }
-      }
+    .map((x, rowIndex) => {
+      return Array(colCount)
+        .fill(null)
+        .map((val, index) => {
+          return {
+            x: index * 110,
+            y: 170,
+            z: rowIndex * 110,
+            width: 80,
+            height: 80,
+            color: {
+              red: getRandomIntInclusive(0, 255),
+              green: getRandomIntInclusive(0, 255),
+              blue: getRandomIntInclusive(0, 255)
+            },
+            velocity: {
+              y: 0
+            },
+            acceleration: {
+              y: getRandomArbitrary(-0.03, -0.2)
+            }
+          }
+        })
     })
 
-  console.log(circles)
   bd.play()
   sd.play()
 }
