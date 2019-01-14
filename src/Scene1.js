@@ -25,8 +25,8 @@ export default function Scene1(p) {
     synth4,
     synth5;
   let currentDrum, currentAccent, currentSynth, lastTriggeredSynth;
-  let colCount = 5;
-  let rowCount = 5;
+  let colCount = 7;
+  let rowCount = 7;
   let rows = [];
 
   p.preload = function() {
@@ -85,10 +85,15 @@ export default function Scene1(p) {
   };
 
   p.update = function() {
+    const rotationScale = p.map(p.mouseY, p.height, 0, 0, 1);
+
     rows.forEach(row => {
       row.forEach(thing => {
         thing.y += thing.velocity.y;
         thing.velocity.y += thing.acceleration.y;
+        thing.rotation.x += thing.rotationVelocity.x * rotationScale;
+        thing.rotation.y += thing.rotationVelocity.y * rotationScale;
+        thing.rotation.z += thing.rotationVelocity.z * rotationScale;
       });
     });
   };
@@ -98,7 +103,6 @@ export default function Scene1(p) {
     p.background('black');
     p.directionalLight(250, 250, 250, -0.45, -0.25, 0.35);
     p.ambientLight(50, 50, 50);
-    p.translate((-colCount * 85) / 2, 0, -400);
 
     rows.forEach(row => {
       row.forEach(thing => {
@@ -106,13 +110,19 @@ export default function Scene1(p) {
         p.noStroke();
         p.ambientMaterial(color.red, color.green, color.blue);
 
+        p.rotateX(thing.rotation.x);
+        p.rotateY(thing.rotation.y);
+        p.rotateZ(thing.rotation.z);
+        p.translate((-colCount * 85) / 2, 0, -400);
         p.translate(thing.x, thing.y, thing.z);
         p.box(thing.width, thing.height, thing.width);
         p.translate(-thing.x, -thing.y, -thing.z);
+        p.translate((colCount * 85) / 2, 0, 400);
+        p.rotateX(-thing.rotation.x);
+        p.rotateY(-thing.rotation.y);
+        p.rotateZ(-thing.rotation.z);
       });
     });
-
-    p.translate((colCount * 85) / 2, 0, 400);
   };
 
   function getRandomArbitrary(min, max) {
@@ -148,6 +158,16 @@ export default function Scene1(p) {
               },
               acceleration: {
                 y: getRandomArbitrary(-0.03, -0.3)
+              },
+              rotation: {
+                x: 0,
+                y: 0,
+                z: 0
+              },
+              rotationVelocity: {
+                x: getRandomArbitrary(-0.01, 0.01),
+                y: getRandomArbitrary(-0.01, 0.01),
+                z: getRandomArbitrary(-0.01, 0.01)
               }
             };
           });
