@@ -1,24 +1,86 @@
 import 'p5/lib/addons/p5.sound';
-import BD from './sounds/bd.wav';
-import SD from './sounds/sd.wav';
+
+import Drum1 from './sounds/dis/drum1.mp3';
+import Drum1Accent from './sounds/dis/drum1Accent.mp3';
+import Drum2 from './sounds/dis/drum2.mp3';
+import Drum2Accent from './sounds/dis/drum2Accent.mp3';
+import Drum3 from './sounds/dis/drum3.mp3';
+import Drum3Accent from './sounds/dis/drum3Accent.mp3';
+import Synth1 from './sounds/dis/synth1.mp3';
+import Synth2 from './sounds/dis/synth2.mp3';
+import Synth3 from './sounds/dis/synth3.mp3';
+import Synth4 from './sounds/dis/synth4.mp3';
+import Synth5 from './sounds/dis/synth5.mp3';
 
 export default function Scene1(p) {
-  let bd, sd;
+  let drum1,
+    drum1Accent,
+    drum2,
+    drum2Accent,
+    drum3,
+    drum3Accent,
+    synth1,
+    synth2,
+    synth3,
+    synth4,
+    synth5;
+  let currentDrum, currentAccent, currentSynth, lastTriggeredSynth;
   let colCount = 5;
   let rowCount = 5;
   let rows = [];
 
   p.preload = function() {
-    p.soundFormats('wav');
-    bd = p.loadSound(BD);
-    bd.setVolume(0.95);
-    bd.playMode('restart');
-    sd = p.loadSound(SD);
-    sd.setVolume(0.95);
-    sd.playMode('restart');
+    p.soundFormats('mp3');
+
+    drum1 = p.loadSound(Drum1);
+    drum1.setVolume(0.95);
+    drum1.playMode('restart');
+
+    drum1Accent = p.loadSound(Drum1Accent);
+    drum1Accent.setVolume(0.95);
+    drum1Accent.playMode('restart');
+
+    drum2 = p.loadSound(Drum2);
+    drum2.setVolume(0.95);
+    drum2.playMode('restart');
+
+    drum2Accent = p.loadSound(Drum2Accent);
+    drum2Accent.setVolume(0.95);
+    drum2Accent.playMode('restart');
+
+    drum3 = p.loadSound(Drum3);
+    drum3.setVolume(0.95);
+    drum3.playMode('restart');
+
+    drum3Accent = p.loadSound(Drum3Accent);
+    drum3Accent.setVolume(0.95);
+    drum3Accent.playMode('restart');
+
+    synth1 = p.loadSound(Synth1);
+    synth1.setVolume(0.95);
+    synth1.playMode('restart');
+
+    synth2 = p.loadSound(Synth2);
+    synth2.setVolume(0.95);
+    synth2.playMode('restart');
+
+    synth3 = p.loadSound(Synth3);
+    synth3.setVolume(0.95);
+    synth3.playMode('restart');
+
+    synth4 = p.loadSound(Synth4);
+    synth4.setVolume(0.95);
+    synth4.playMode('restart');
+
+    synth5 = p.loadSound(Synth5);
+    synth5.setVolume(0.95);
+    synth5.playMode('restart');
   };
 
   p.setup = function() {
+    currentDrum = drum1;
+    currentAccent = drum1Accent;
+    currentSynth = synth1;
     p.createCanvas(window.innerWidth, window.innerHeight, p.WEBGL);
   };
 
@@ -35,6 +97,7 @@ export default function Scene1(p) {
     p.update();
     p.background('black');
     p.directionalLight(250, 250, 250, -0.45, -0.25, 0.35);
+    p.ambientLight(50, 50, 50);
     p.translate((-colCount * 85) / 2, 0, -400);
 
     rows.forEach(row => {
@@ -62,7 +125,7 @@ export default function Scene1(p) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  function trigger() {
+  function trigger({ accent }) {
     rows = Array(rowCount)
       .fill(null)
       .map((x, rowIndex) => {
@@ -84,23 +147,71 @@ export default function Scene1(p) {
                 y: 0
               },
               acceleration: {
-                y: getRandomArbitrary(-0.03, -0.2)
+                y: getRandomArbitrary(-0.03, -0.3)
               }
             };
           });
       });
 
-    bd.play();
-    sd.play();
+    if (lastTriggeredSynth && lastTriggeredSynth !== currentSynth) {
+      lastTriggeredSynth.stop();
+    }
+
+    accent ? currentAccent.play() : currentDrum.play();
+    currentSynth.play();
+    lastTriggeredSynth = currentSynth;
   }
 
-  p.mouseClicked = function() {
-    trigger();
-  };
-
   p.keyPressed = function() {
-    if (p.keyCode === 32) {
-      trigger();
+    if (p.keyCode === 90) {
+      return trigger({ accent: false });
+    }
+
+    if (p.keyCode === 88) {
+      return trigger({ accent: true });
+    }
+
+    // 1 = synth1
+    if (p.keyCode === 49) {
+      currentSynth = synth1;
+    }
+
+    // 2 = synth2
+    if (p.keyCode === 50) {
+      currentSynth = synth2;
+    }
+
+    // 3 = synth3
+    if (p.keyCode === 51) {
+      currentSynth = synth3;
+    }
+
+    // 4 = synth4
+    if (p.keyCode === 52) {
+      currentSynth = synth4;
+    }
+
+    // 5 = synth5
+    if (p.keyCode === 53) {
+      currentSynth = synth5;
+    }
+
+    // 7 = drum2 (snare)
+    if (p.keyCode === 55) {
+      currentDrum = drum2;
+      currentAccent = drum2Accent;
+    }
+
+    // 8 = drum3 (rimshot)
+    if (p.keyCode === 56) {
+      currentDrum = drum3;
+      currentAccent = drum3Accent;
+    }
+
+    // 9 = drum1 (kick drum)
+    if (p.keyCode === 57) {
+      currentDrum = drum1;
+      currentAccent = drum1Accent;
     }
   };
 }
