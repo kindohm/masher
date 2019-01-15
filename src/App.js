@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import P5Wrapper from 'react-p5-wrapper';
-import Scene1 from './Scene1';
+import Scene2 from './Scene2';
 
 class App extends Component {
   render() {
-    return <P5Wrapper sketch={Scene1} />;
+    return <P5Wrapper sketch={Scene2} />;
   }
 }
 
