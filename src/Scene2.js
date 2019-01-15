@@ -1,7 +1,7 @@
 import 'p5/lib/addons/p5.sound';
 import { getRandomIntInclusive, getRandomArbitrary } from './Random';
 
-export default function Scene1(p) {
+export default function Scene2(p) {
   const max = 25;
   const size = 1;
   const baseScale = 50;
