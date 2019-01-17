@@ -11,6 +11,7 @@ const standardYTransltion = ((slotCount - 1) * -cellSize) / 2;
 const standardZTranslation = ((rowCount - 1) * -cellSize) / 2;
 
 export default class Scene3 {
+  name = 'scene3';
   rows;
   cameraRotX = 0;
   cameraRotY = 0;

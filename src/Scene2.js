@@ -2,6 +2,7 @@ import 'p5/lib/addons/p5.sound';
 import { getRandomIntInclusive, getRandomArbitrary } from './Random';
 
 export default class Scene2 {
+  name = 'scene2';
   halfPi;
   netHalfPi;
   max = 25;

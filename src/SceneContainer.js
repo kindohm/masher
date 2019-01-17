@@ -12,23 +12,18 @@ export default function SceneContainer(p) {
 
     const sounds = getSounds(p);
 
-    let scene1 = new Scene1(sounds);
-    scene1.preload(p);
-    scenes.scene1 = scene1;
-
-    let scene2 = new Scene2(sounds);
-    scene2.preload(p);
-    scenes.scene2 = scene2;
-
-    let scene3 = new Scene3(sounds);
-    scene3.preload(p);
-    scenes.scene3 = scene3;
+    [new Scene1(sounds), new Scene2(sounds), new Scene3(sounds)].forEach(
+      scene => {
+        scene.preload(p);
+        scenes[scene.name] = scene;
+      }
+    );
   };
 
   p.setup = () => {
-    scenes.scene1.setup(p);
-    scenes.scene2.setup(p);
-    scenes.scene3.setup(p);
+    scenes.forEach(scene => {
+      scene.setup(p);
+    });
     p.createCanvas(window.innerWidth, window.innerHeight, p.WEBGL);
   };
 

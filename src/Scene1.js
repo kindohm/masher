@@ -1,6 +1,7 @@
 import 'p5/lib/addons/p5.sound';
 
 export default class Scene1 {
+  name = 'scene1';
   sounds;
   currentDrum;
   currentAccent;
