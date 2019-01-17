@@ -1,11 +1,6 @@
 import 'p5/lib/addons/p5.sound';
 import { getRandomIntInclusive, getRandomArbitrary } from './Random';
 
-import Bd1 from './sounds/like/bd1.mp3';
-import Bd2 from './sounds/like/bd2.mp3';
-import Cp1 from './sounds/like/cp1.mp3';
-import Cp2 from './sounds/like/cp2.mp3';
-
 export default class Scene2 {
   halfPi;
   netHalfPi;
@@ -17,37 +12,16 @@ export default class Scene2 {
   cameraRotation = 0;
   otherBank;
 
-  bd1;
-  bd2;
-  cp1;
-  cp2;
+  constructor(allSounds) {
+    this.sounds = allSounds.like;
+  }
 
   preload(p) {
     this.halfPi = p.PI / 2;
     this.negHalfPi = -p.PI / 2;
-
-    p.soundFormats('mp3');
-
-    this.bd1 = p.loadSound(Bd1);
-    this.bd1.setVolume(0.95);
-    this.bd1.playMode('restart');
-
-    this.bd2 = p.loadSound(Bd2);
-    this.bd2.setVolume(0.95);
-    this.bd2.playMode('restart');
-
-    this.cp1 = p.loadSound(Cp1);
-    this.cp1.setVolume(0.95);
-    this.cp1.playMode('restart');
-
-    this.cp2 = p.loadSound(Cp2);
-    this.cp2.setVolume(0.95);
-    this.cp2.playMode('restart');
   }
 
-  setup(p) {
-    // p.createCanvas(window.innerWidth, window.innerHeight, p.WEBGL);
-  }
+  setup(p) {}
 
   update(p) {
     const rotationScale = p.map(p.mouseY, p.height, 0, 0, 0.0625);
@@ -167,15 +141,15 @@ export default class Scene2 {
 
     if (accent) {
       if (this.otherBank) {
-        this.cp2.play();
+        this.sounds.cp2.play();
       } else {
-        this.cp1.play();
+        this.sounds.cp1.play();
       }
     } else {
       if (this.otherBank) {
-        this.bd2.play();
+        this.sounds.bd2.play();
       } else {
-        this.bd1.play();
+        this.sounds.bd1.play();
       }
     }
   }

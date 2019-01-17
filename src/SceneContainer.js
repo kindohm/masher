@@ -1,6 +1,7 @@
 import Scene1 from './Scene1';
 import Scene2 from './Scene2';
 import Scene3 from './Scene3';
+import { getSounds } from './Sound';
 
 export default function SceneContainer(p) {
   let scenes = {};
@@ -9,15 +10,17 @@ export default function SceneContainer(p) {
   p.preload = () => {
     p.soundFormats('mp3');
 
-    let scene1 = new Scene1();
+    const sounds = getSounds(p);
+
+    let scene1 = new Scene1(sounds);
     scene1.preload(p);
     scenes.scene1 = scene1;
 
-    let scene2 = new Scene2();
+    let scene2 = new Scene2(sounds);
     scene2.preload(p);
     scenes.scene2 = scene2;
 
-    let scene3 = new Scene3();
+    let scene3 = new Scene3(sounds);
     scene3.preload(p);
     scenes.scene3 = scene3;
   };
