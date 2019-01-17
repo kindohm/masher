@@ -6,51 +6,58 @@ import Bd2 from './sounds/like/bd2.mp3';
 import Cp1 from './sounds/like/cp1.mp3';
 import Cp2 from './sounds/like/cp2.mp3';
 
-export default function Scene2(p) {
-  const max = 25;
-  const size = 1;
-  const baseScale = 50;
-  let nodes;
-  let index;
-  const halfPi = p.PI / 2;
-  const negHalfPi = -p.PI / 2;
-  let cameraRotation = 0;
-  let otherBank;
+export default class Scene2 {
+  halfPi;
+  netHalfPi;
+  max = 25;
+  size = 1;
+  baseScale = 50;
+  nodes;
+  index;
+  cameraRotation = 0;
+  otherBank;
 
-  let bd1, bd2, cp1, cp2;
+  bd1;
+  bd2;
+  cp1;
+  cp2;
 
-  p.preload = function() {
+  preload(p) {
+    this.halfPi = p.PI / 2;
+    this.negHalfPi = -p.PI / 2;
+
     p.soundFormats('mp3');
 
-    bd1 = p.loadSound(Bd1);
-    bd1.setVolume(0.95);
-    bd1.playMode('restart');
+    this.bd1 = p.loadSound(Bd1);
+    this.bd1.setVolume(0.95);
+    this.bd1.playMode('restart');
 
-    bd2 = p.loadSound(Bd2);
-    bd2.setVolume(0.95);
-    bd2.playMode('restart');
+    this.bd2 = p.loadSound(Bd2);
+    this.bd2.setVolume(0.95);
+    this.bd2.playMode('restart');
 
-    cp1 = p.loadSound(Cp1);
-    cp1.setVolume(0.95);
-    cp1.playMode('restart');
+    this.cp1 = p.loadSound(Cp1);
+    this.cp1.setVolume(0.95);
+    this.cp1.playMode('restart');
 
-    cp2 = p.loadSound(Cp2);
-    cp2.setVolume(0.95);
-    cp2.playMode('restart');
-  };
+    this.cp2 = p.loadSound(Cp2);
+    this.cp2.setVolume(0.95);
+    this.cp2.playMode('restart');
+  }
 
-  p.setup = function() {
-    p.createCanvas(window.innerWidth, window.innerHeight, p.WEBGL);
-  };
+  setup(p) {
+    // p.createCanvas(window.innerWidth, window.innerHeight, p.WEBGL);
+  }
 
-  p.update = function() {
+  update(p) {
     const rotationScale = p.map(p.mouseY, p.height, 0, 0, 0.0625);
     const velocityScale = p.map(p.mouseX, 0, p.width, 0, 2);
-    cameraRotation += 0.003;
-    if (cameraRotation > Number.MAX_SAFE_INTEGER - 1) cameraRotation = 0;
+    this.cameraRotation += 0.003;
+    if (this.cameraRotation > Number.MAX_SAFE_INTEGER - 1)
+      this.cameraRotation = 0;
 
-    nodes &&
-      nodes.forEach(node => {
+    this.nodes &&
+      this.nodes.forEach(node => {
         if (!node) return;
         node.rotation.x += node.rotationVelocity.x * rotationScale;
         node.rotation.y += node.rotationVelocity.y * rotationScale;
@@ -59,33 +66,33 @@ export default function Scene2(p) {
         node.y += node.velocity.y * velocityScale;
         node.z += node.velocity.z * velocityScale;
       });
-  };
+  }
 
-  p.draw = function() {
-    p.update();
+  draw(p) {
     p.background('black');
     p.directionalLight(250, 250, 250, -0.45, -0.25, 0.35);
     p.ambientLight(50, 50, 50);
     p.noStroke();
+    p.fill(0);
 
-    p.rotateY(cameraRotation);
+    p.rotateY(this.cameraRotation);
 
-    drawNodes();
-    p.rotateY(halfPi);
-    drawNodes();
-    p.rotateY(halfPi);
-    drawNodes();
-    p.rotateY(halfPi);
-    drawNodes();
+    this.drawNodes(p);
+    p.rotateY(this.halfPi);
+    this.drawNodes(p);
+    p.rotateY(this.halfPi);
+    this.drawNodes(p);
+    p.rotateY(this.halfPi);
+    this.drawNodes(p);
 
-    p.rotateY(negHalfPi);
-    p.rotateY(negHalfPi);
-    p.rotateY(negHalfPi);
-  };
+    p.rotateY(this.negHalfPi);
+    p.rotateY(this.negHalfPi);
+    p.rotateY(this.negHalfPi);
+  }
 
-  function drawNodes() {
-    nodes &&
-      nodes.forEach(node => {
+  drawNodes(p) {
+    this.nodes &&
+      this.nodes.forEach(node => {
         if (!node) return;
         p.ambientMaterial(node.color.r, node.color.g, node.color.b);
 
@@ -103,26 +110,28 @@ export default function Scene2(p) {
       });
   }
 
-  function reset() {
-    nodes = new Array(max).fill(null);
-    index = 0;
+  reset() {
+    this.nodes = new Array(this.max).fill(null);
+    this.index = 0;
   }
 
-  function randomSignum() {
+  randomSignum() {
     return getRandomArbitrary(-1, 1) > 0 ? 1 : -1;
   }
 
-  function trigger({ accent }) {
-    if (!nodes || nodes[nodes.length - 1] !== null) {
-      reset();
+  trigger({ accent, p }) {
+    if (!this.nodes || this.nodes[this.nodes.length - 1] !== null) {
+      this.reset();
     }
 
-    const lastNode = index === 0 ? null : nodes[index - 1];
-    const scale = p.random(baseScale * 0.25, baseScale);
+    const lastNode = this.index === 0 ? null : this.nodes[this.index - 1];
+    const scale = p.random(this.baseScale * 0.25, this.baseScale);
     const newNode = {
       x: lastNode ? lastNode.x + lastNode.width / 2 : 0,
-      y: lastNode ? lastNode.y + (lastNode.height / 2) * randomSignum() : 0,
-      z: lastNode ? lastNode.z + (lastNode.depth / 2) * randomSignum() : 0,
+      y: lastNode
+        ? lastNode.y + (lastNode.height / 2) * this.randomSignum()
+        : 0,
+      z: lastNode ? lastNode.z + (lastNode.depth / 2) * this.randomSignum() : 0,
       velocity: {
         x: p.random(-1, 1),
         y: p.random(-1, 1),
@@ -130,9 +139,9 @@ export default function Scene2(p) {
       },
       scale,
       halfScale: scale / 2,
-      width: size * scale,
-      height: size * scale,
-      depth: size * scale,
+      width: this.size * scale,
+      height: this.size * scale,
+      depth: this.size * scale,
       high: accent,
       color: accent
         ? {
@@ -153,41 +162,41 @@ export default function Scene2(p) {
       }
     };
 
-    nodes[index] = newNode;
-    index++;
+    this.nodes[this.index] = newNode;
+    this.index++;
 
     if (accent) {
-      if (otherBank) {
-        cp2.play();
+      if (this.otherBank) {
+        this.cp2.play();
       } else {
-        cp1.play();
+        this.cp1.play();
       }
     } else {
-      if (otherBank) {
-        bd2.play();
+      if (this.otherBank) {
+        this.bd2.play();
       } else {
-        bd1.play();
+        this.bd1.play();
       }
     }
   }
 
-  p.keyPressed = function() {
+  keyPressed(p) {
     if (p.keyCode === 90) {
-      return trigger({ accent: false });
+      return this.trigger({ accent: false, p });
     }
 
     if (p.keyCode === 88) {
-      return trigger({ accent: true });
+      return this.trigger({ accent: true, p });
     }
 
     // 1 = bank1
     if (p.keyCode === 49) {
-      otherBank = false;
+      this.otherBank = false;
     }
 
     // 2 = bank2
     if (p.keyCode === 50) {
-      otherBank = true;
+      this.otherBank = true;
     }
-  };
+  }
 }

@@ -12,82 +12,92 @@ import Synth3 from './sounds/dis/synth3.mp3';
 import Synth4 from './sounds/dis/synth4.mp3';
 import Synth5 from './sounds/dis/synth5.mp3';
 
-export default function Scene1(p) {
-  let drum1,
-    drum1Accent,
-    drum2,
-    drum2Accent,
-    drum3,
-    drum3Accent,
-    synth1,
-    synth2,
-    synth3,
-    synth4,
-    synth5;
-  let currentDrum, currentAccent, currentSynth, lastTriggeredSynth;
-  let colCount = 7;
-  let rowCount = 7;
-  let rows = [];
+export default class Scene1 {
+  drum1;
+  drum1Accent;
+  drum2;
+  drum2Accent;
+  drum3;
+  drum3Accent;
+  synth1;
+  synth2;
+  synth3;
+  synth4;
+  synth5;
 
-  p.preload = function() {
-    p.soundFormats('mp3');
+  currentDrum;
+  currentAccent;
+  currentSynth;
+  lastTriggeredSynth;
 
-    drum1 = p.loadSound(Drum1);
-    drum1.setVolume(0.95);
-    drum1.playMode('restart');
+  colCount = 7;
+  rowCount = 7;
+  rows = [];
 
-    drum1Accent = p.loadSound(Drum1Accent);
-    drum1Accent.setVolume(0.95);
-    drum1Accent.playMode('restart');
+  constructor() {
+    this.trigger = this.trigger.bind(this);
+    this.preload = this.preload.bind(this);
+    this.setup = this.setup.bind(this);
+  }
 
-    drum2 = p.loadSound(Drum2);
-    drum2.setVolume(0.95);
-    drum2.playMode('restart');
+  preload(p) {
+    console.log('preloading');
 
-    drum2Accent = p.loadSound(Drum2Accent);
-    drum2Accent.setVolume(0.95);
-    drum2Accent.playMode('restart');
+    this.drum1 = p.loadSound(Drum1);
+    this.drum1.setVolume(0.95);
+    this.drum1.playMode('restart');
 
-    drum3 = p.loadSound(Drum3);
-    drum3.setVolume(0.95);
-    drum3.playMode('restart');
+    this.drum1Accent = p.loadSound(Drum1Accent);
+    this.drum1Accent.setVolume(0.95);
+    this.drum1Accent.playMode('restart');
 
-    drum3Accent = p.loadSound(Drum3Accent);
-    drum3Accent.setVolume(0.95);
-    drum3Accent.playMode('restart');
+    this.drum2 = p.loadSound(Drum2);
+    this.drum2.setVolume(0.95);
+    this.drum2.playMode('restart');
 
-    synth1 = p.loadSound(Synth1);
-    synth1.setVolume(0.95);
-    synth1.playMode('restart');
+    this.drum2Accent = p.loadSound(Drum2Accent);
+    this.drum2Accent.setVolume(0.95);
+    this.drum2Accent.playMode('restart');
 
-    synth2 = p.loadSound(Synth2);
-    synth2.setVolume(0.95);
-    synth2.playMode('restart');
+    this.drum3 = p.loadSound(Drum3);
+    this.drum3.setVolume(0.95);
+    this.drum3.playMode('restart');
 
-    synth3 = p.loadSound(Synth3);
-    synth3.setVolume(0.95);
-    synth3.playMode('restart');
+    this.drum3Accent = p.loadSound(Drum3Accent);
+    this.drum3Accent.setVolume(0.95);
+    this.drum3Accent.playMode('restart');
 
-    synth4 = p.loadSound(Synth4);
-    synth4.setVolume(0.95);
-    synth4.playMode('restart');
+    this.synth1 = p.loadSound(Synth1);
+    this.synth1.setVolume(0.95);
+    this.synth1.playMode('restart');
 
-    synth5 = p.loadSound(Synth5);
-    synth5.setVolume(0.95);
-    synth5.playMode('restart');
-  };
+    this.synth2 = p.loadSound(Synth2);
+    this.synth2.setVolume(0.95);
+    this.synth2.playMode('restart');
 
-  p.setup = function() {
-    currentDrum = drum1;
-    currentAccent = drum1Accent;
-    currentSynth = synth1;
-    p.createCanvas(window.innerWidth, window.innerHeight, p.WEBGL);
-  };
+    this.synth3 = p.loadSound(Synth3);
+    this.synth3.setVolume(0.95);
+    this.synth3.playMode('restart');
 
-  p.update = function() {
+    this.synth4 = p.loadSound(Synth4);
+    this.synth4.setVolume(0.95);
+    this.synth4.playMode('restart');
+
+    this.synth5 = p.loadSound(Synth5);
+    this.synth5.setVolume(0.95);
+    this.synth5.playMode('restart');
+  }
+
+  setup(p) {
+    this.currentDrum = this.drum1;
+    this.currentAccent = this.drum1Accent;
+    this.currentSynth = this.synth1;
+  }
+
+  update(p) {
     const rotationScale = p.map(p.mouseY, p.height, 0, 0, 1);
 
-    rows.forEach(row => {
+    this.rows.forEach(row => {
       row.forEach(thing => {
         thing.y += thing.velocity.y;
         thing.velocity.y += thing.acceleration.y;
@@ -96,15 +106,15 @@ export default function Scene1(p) {
         thing.rotation.z += thing.rotationVelocity.z * rotationScale;
       });
     });
-  };
+  }
 
-  p.draw = function() {
-    p.update();
+  draw(p) {
     p.background('black');
     p.directionalLight(250, 250, 250, -0.45, -0.25, 0.35);
     p.ambientLight(50, 50, 50);
+    p.fill(0);
 
-    rows.forEach(row => {
+    this.rows.forEach(row => {
       row.forEach(thing => {
         const color = thing.color;
         p.noStroke();
@@ -113,33 +123,33 @@ export default function Scene1(p) {
         p.rotateX(thing.rotation.x);
         p.rotateY(thing.rotation.y);
         p.rotateZ(thing.rotation.z);
-        p.translate((-colCount * 85) / 2, 0, -400);
+        p.translate((-this.colCount * 85) / 2, 0, -400);
         p.translate(thing.x, thing.y, thing.z);
         p.box(thing.width, thing.height, thing.width);
         p.translate(-thing.x, -thing.y, -thing.z);
-        p.translate((colCount * 85) / 2, 0, 400);
+        p.translate((this.colCount * 85) / 2, 0, 400);
         p.rotateX(-thing.rotation.x);
         p.rotateY(-thing.rotation.y);
         p.rotateZ(-thing.rotation.z);
       });
     });
-  };
+  }
 
-  function getRandomArbitrary(min, max) {
+  getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
 
-  function getRandomIntInclusive(min, max) {
+  getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  function trigger({ accent }) {
-    rows = Array(rowCount)
+  trigger({ accent }) {
+    this.rows = Array(this.rowCount)
       .fill(null)
       .map((x, rowIndex) => {
-        return Array(colCount)
+        return Array(this.colCount)
           .fill(null)
           .map((val, index) => {
             return {
@@ -149,15 +159,15 @@ export default function Scene1(p) {
               width: 80,
               height: 80,
               color: {
-                red: getRandomIntInclusive(0, 255),
-                green: getRandomIntInclusive(0, 255),
-                blue: getRandomIntInclusive(0, 255)
+                red: this.getRandomIntInclusive(0, 255),
+                green: this.getRandomIntInclusive(0, 255),
+                blue: this.getRandomIntInclusive(0, 255)
               },
               velocity: {
                 y: 0
               },
               acceleration: {
-                y: getRandomArbitrary(-0.03, -0.3)
+                y: this.getRandomArbitrary(-0.03, -0.3)
               },
               rotation: {
                 x: 0,
@@ -165,73 +175,76 @@ export default function Scene1(p) {
                 z: 0
               },
               rotationVelocity: {
-                x: getRandomArbitrary(-0.01, 0.01),
-                y: getRandomArbitrary(-0.01, 0.01),
-                z: getRandomArbitrary(-0.01, 0.01)
+                x: this.getRandomArbitrary(-0.01, 0.01),
+                y: this.getRandomArbitrary(-0.01, 0.01),
+                z: this.getRandomArbitrary(-0.01, 0.01)
               }
             };
           });
       });
 
-    if (lastTriggeredSynth && lastTriggeredSynth !== currentSynth) {
-      lastTriggeredSynth.stop();
+    if (
+      this.lastTriggeredSynth &&
+      this.lastTriggeredSynth !== this.currentSynth
+    ) {
+      this.lastTriggeredSynth.stop();
     }
 
-    accent ? currentAccent.play() : currentDrum.play();
-    currentSynth.play();
-    lastTriggeredSynth = currentSynth;
+    accent ? this.currentAccent.play() : this.currentDrum.play();
+    this.currentSynth.play();
+    this.lastTriggeredSynth = this.currentSynth;
   }
 
-  p.keyPressed = function() {
+  keyPressed(p) {
     if (p.keyCode === 90) {
-      return trigger({ accent: false });
+      return this.trigger({ accent: false });
     }
 
     if (p.keyCode === 88) {
-      return trigger({ accent: true });
+      return this.trigger({ accent: true });
     }
 
     // 1 = synth1
     if (p.keyCode === 49) {
-      currentSynth = synth1;
+      this.currentSynth = this.synth1;
     }
 
     // 2 = synth2
     if (p.keyCode === 50) {
-      currentSynth = synth2;
+      this.currentSynth = this.synth2;
     }
 
     // 3 = synth3
     if (p.keyCode === 51) {
-      currentSynth = synth3;
+      this.currentSynth = this.synth3;
     }
 
     // 4 = synth4
     if (p.keyCode === 52) {
-      currentSynth = synth4;
+      this.currentSynth = this.synth4;
     }
 
     // 5 = synth5
     if (p.keyCode === 53) {
-      currentSynth = synth5;
+      this.currentSynth = this.synth5;
     }
 
     // 7 = drum2 (snare)
     if (p.keyCode === 55) {
-      currentDrum = drum2;
-      currentAccent = drum2Accent;
+      this.currentDrum = this.drum2;
+      this.currentAccent = this.drum2Accent;
     }
 
     // 8 = drum3 (rimshot)
     if (p.keyCode === 56) {
-      currentDrum = drum3;
-      currentAccent = drum3Accent;
+      this.currentDrum = this.drum3;
+      this.currentAccent = this.drum3Accent;
     }
 
     // 9 = drum1 (kick drum)
     if (p.keyCode === 57) {
-      currentDrum = drum1;
-      currentAccent = drum1Accent;
+      this.currentDrum = this.drum1;
+      this.currentAccent = this.drum1Accent;
     }
-  };
+  }
 }

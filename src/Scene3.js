@@ -15,114 +15,123 @@ import Synth2c from './sounds/friend/synth2c.mp3';
 import Synth2d from './sounds/friend/synth2d.mp3';
 import Synth2e from './sounds/friend/synth2e.mp3';
 
-export default function Scene3(p) {
-  const baseSize = 75;
-  const cellSize = 120;
-  const rowCount = 4;
-  const colCount = 4;
-  const slotCount = 4;
+const baseSize = 75;
+const cellSize = 120;
+const rowCount = 4;
+const colCount = 4;
+const slotCount = 4;
 
-  const standardXTranslation = ((colCount - 1) * -cellSize) / 2;
-  const standardYTransltion = ((slotCount - 1) * -cellSize) / 2;
-  const standardZTranslation = ((rowCount - 1) * -cellSize) / 2;
+const standardXTranslation = ((colCount - 1) * -cellSize) / 2;
+const standardYTransltion = ((slotCount - 1) * -cellSize) / 2;
+const standardZTranslation = ((rowCount - 1) * -cellSize) / 2;
 
-  let rows;
-  let cameraRotX = 0;
-  let cameraRotY = 0;
-  let cameraRotZ = 0;
-  let otherBank = false;
-  let bd1,
-    bd2,
-    sd1,
-    sd2,
-    synth1a,
-    synth1b,
-    synth1c,
-    synth1d,
-    synth1e,
-    synth2a,
-    synth2b,
-    synth2c,
-    synth2d,
-    synth2e;
-  let currentSynth, currentKick, currentSnare, playingSynth;
+export default class Scene3 {
+  rows;
+  cameraRotX = 0;
+  cameraRotY = 0;
+  cameraRotZ = 0;
+  otherBank = false;
+  bd1;
+  bd2;
+  sd1;
+  sd2;
+  synth1a;
+  synth1b;
+  synth1c;
+  synth1d;
+  synth1e;
+  synth2a;
+  synth2b;
+  synth2c;
+  synth2d;
+  synth2e;
+  currentSynth;
+  currentKick;
+  currentSnare;
+  playingSynth;
 
-  p.preload = function() {
+  constructor() {
+    this.drawTriangle = this.drawTriangle.bind(this);
+  }
+
+  preload(p) {
     p.soundFormats('mp3');
 
-    bd1 = p.loadSound(Bd1);
-    bd1.setVolume(0.95);
-    bd1.playMode('restart');
+    this.bd1 = p.loadSound(Bd1);
+    this.bd1.setVolume(0.95);
+    this.bd1.playMode('restart');
 
-    sd1 = p.loadSound(Sd1);
-    sd1.setVolume(0.95);
-    sd1.playMode('restart');
+    this.sd1 = p.loadSound(Sd1);
+    this.sd1.setVolume(0.95);
+    this.sd1.playMode('restart');
 
-    bd2 = p.loadSound(Bd2);
-    bd2.setVolume(0.95);
-    bd2.playMode('restart');
+    this.bd2 = p.loadSound(Bd2);
+    this.bd2.setVolume(0.95);
+    this.bd2.playMode('restart');
 
-    sd2 = p.loadSound(Sd2);
-    sd2.setVolume(0.95);
-    sd2.playMode('restart');
+    this.sd2 = p.loadSound(Sd2);
+    this.sd2.setVolume(0.95);
+    this.sd2.playMode('restart');
 
-    synth1a = p.loadSound(Synth1a);
-    synth1a.setVolume(0.95);
-    synth1a.playMode('restart');
+    this.synth1a = p.loadSound(Synth1a);
+    this.synth1a.setVolume(0.95);
+    this.synth1a.playMode('restart');
 
-    synth1b = p.loadSound(Synth1b);
-    synth1b.setVolume(0.95);
-    synth1b.playMode('restart');
+    this.synth1b = p.loadSound(Synth1b);
+    this.synth1b.setVolume(0.95);
+    this.synth1b.playMode('restart');
 
-    synth1c = p.loadSound(Synth1c);
-    synth1c.setVolume(0.95);
-    synth1c.playMode('restart');
+    this.synth1c = p.loadSound(Synth1c);
+    this.synth1c.setVolume(0.95);
+    this.synth1c.playMode('restart');
 
-    synth1d = p.loadSound(Synth1d);
-    synth1d.setVolume(0.95);
-    synth1d.playMode('restart');
+    this.synth1d = p.loadSound(Synth1d);
+    this.synth1d.setVolume(0.95);
+    this.synth1d.playMode('restart');
 
-    synth1e = p.loadSound(Synth1e);
-    synth1e.setVolume(0.95);
-    synth1e.playMode('restart');
+    this.synth1e = p.loadSound(Synth1e);
+    this.synth1e.setVolume(0.95);
+    this.synth1e.playMode('restart');
 
-    synth2a = p.loadSound(Synth2a);
-    synth2a.setVolume(0.95);
-    synth2a.playMode('restart');
+    this.synth2a = p.loadSound(Synth2a);
+    this.synth2a.setVolume(0.95);
+    this.synth2a.playMode('restart');
 
-    synth2b = p.loadSound(Synth2b);
-    synth2b.setVolume(0.95);
-    synth2b.playMode('restart');
+    this.synth2b = p.loadSound(Synth2b);
+    this.synth2b.setVolume(0.95);
+    this.synth2b.playMode('restart');
 
-    synth2c = p.loadSound(Synth2c);
-    synth2c.setVolume(0.95);
-    synth2c.playMode('restart');
+    this.synth2c = p.loadSound(Synth2c);
+    this.synth2c.setVolume(0.95);
+    this.synth2c.playMode('restart');
 
-    synth2d = p.loadSound(Synth2d);
-    synth2d.setVolume(0.95);
-    synth2d.playMode('restart');
+    this.synth2d = p.loadSound(Synth2d);
+    this.synth2d.setVolume(0.95);
+    this.synth2d.playMode('restart');
 
-    synth2e = p.loadSound(Synth2e);
-    synth2e.setVolume(0.95);
-    synth2e.playMode('restart');
+    this.synth2e = p.loadSound(Synth2e);
+    this.synth2e.setVolume(0.95);
+    this.synth2e.playMode('restart');
 
-    currentSynth = synth1a;
-    currentKick = bd1;
-    currentSnare = sd1;
-  };
+    this.currentSynth = this.synth1a;
+    this.currentKick = this.bd1;
+    this.currentSnare = this.sd1;
+  }
 
-  p.setup = function() {
-    p.createCanvas(window.innerWidth, window.innerHeight, p.WEBGL);
-    rows = new Array(rowCount).fill(
+  setup(p) {
+    console.log('setup!');
+    // p.createCanvas(window.innerWidth, window.innerHeight, p.WEBGL);
+    this.rows = new Array(rowCount).fill(
       new Array(colCount).fill(new Array(slotCount).fill(null))
     );
-    // reset({ accent: false });
-  };
 
-  p.update = function() {
-    cameraRotX -= 0.001;
-    cameraRotY -= 0.006;
-    cameraRotZ += 0.0001;
+    // reset({ accent: false });
+  }
+
+  update(p) {
+    this.cameraRotX -= 0.001;
+    this.cameraRotY -= 0.006;
+    this.cameraRotZ += 0.0001;
 
     const rotationScale = p.map(p.mouseY, p.height, 0, 0.002, -0.002);
     const growthScale = p.map(p.mouseX, 0, p.width, -0.05, 0.05);
@@ -131,46 +140,44 @@ export default function Scene3(p) {
     for (let r = 0; r < rowCount; r++) {
       for (let c = 0; c < colCount; c++) {
         for (let s = 0; s < slotCount; s++) {
-          cell = rows[r][c][s];
+          cell = this.rows[r][c][s];
           if (!cell) continue;
           cell.rotation += rotationScale;
           cell.size += growthScale;
         }
       }
     }
-  };
+  }
 
-  p.draw = function() {
-    p.update();
+  draw(p) {
     p.background('black');
     p.noFill();
     p.strokeWeight(2);
 
-    p.rotateX(cameraRotX);
-    p.rotateY(cameraRotY);
-    p.rotateZ(cameraRotZ);
+    if (!this.rows) return;
+    let cell;
+
+    p.ambientMaterial(0, 0, 0);
+    p.stroke(0, 0, 255);
+
+    p.rotateX(this.cameraRotX);
+    p.rotateY(this.cameraRotY);
+    p.rotateZ(this.cameraRotZ);
     p.translate(
       standardXTranslation,
       standardYTransltion,
       standardZTranslation
     );
 
-    if (!rows) return;
-
-    let cell;
-
-    p.ambientMaterial(0, 0, 0);
-    p.stroke(0, 0, 255);
-
     for (let r = 0; r < rowCount; r++) {
       for (let c = 0; c < colCount; c++) {
         for (let s = 0; s < slotCount; s++) {
-          cell = rows[r][c][s];
+          cell = this.rows[r][c][s];
           if (!cell) continue;
           p.translate(c * cellSize, r * cellSize, s * cellSize);
           p.rotateX(cell.rotation);
           if (cell.high) {
-            drawTriangle(cell.size, cell.size);
+            this.drawTriangle(p, cell.size, cell.size);
           } else {
             p.box(cell.size, cell.size, 1);
           }
@@ -179,17 +186,26 @@ export default function Scene3(p) {
         }
       }
     }
-  };
 
-  function reset({ accent }) {
-    cameraRotX = 0;
-    cameraRotY = 0;
-    cameraRotZ = 0;
+    p.rotateX(-this.cameraRotX);
+    p.rotateY(-this.cameraRotY);
+    p.rotateZ(-this.cameraRotZ);
+    p.translate(
+      -standardXTranslation,
+      -standardYTransltion,
+      -standardZTranslation
+    );
+  }
+
+  reset({ accent }) {
+    this.cameraRotX = 0;
+    this.cameraRotY = 0;
+    this.cameraRotZ = 0;
 
     for (let r = 0; r < rowCount; r++) {
       for (let c = 0; c < colCount; c++) {
         for (let s = 0; s < slotCount; s++) {
-          rows[r][c][s] = {
+          this.rows[r][c][s] = {
             size: baseSize,
             rotation: 0,
             high: accent
@@ -199,75 +215,75 @@ export default function Scene3(p) {
     }
   }
 
-  function trigger({ accent }) {
-    reset({ accent });
+  trigger({ accent }) {
+    this.reset({ accent });
 
-    if (playingSynth) {
-      playingSynth.stop();
+    if (this.playingSynth) {
+      this.playingSynth.stop();
     }
 
     if (accent) {
-      currentSnare.play();
+      this.currentSnare.play();
     } else {
-      currentKick.play();
+      this.currentKick.play();
     }
 
-    currentSynth.play();
-    playingSynth = currentSynth;
+    this.currentSynth.play();
+    this.playingSynth = this.currentSynth;
   }
 
-  p.keyPressed = function() {
+  keyPressed(p) {
     if (p.keyCode === 90) {
-      return trigger({ accent: false });
+      return this.trigger({ accent: false });
     }
 
     if (p.keyCode === 88) {
-      return trigger({ accent: true });
+      return this.trigger({ accent: true });
     }
 
     // 1 = synth1
     if (p.keyCode === 49) {
-      currentSynth = otherBank ? synth2a : synth1a;
+      this.currentSynth = this.otherBank ? this.synth2a : this.synth1a;
     }
 
     // 2 = synth2
     if (p.keyCode === 50) {
-      currentSynth = otherBank ? synth2b : synth1b;
+      this.currentSynth = this.otherBank ? this.synth2b : this.synth1b;
     }
 
-    // 3 = synth3
+    // 3 = this.synth3
     if (p.keyCode === 51) {
-      currentSynth = otherBank ? synth2c : synth1c;
+      this.currentSynth = this.otherBank ? this.synth2c : this.synth1c;
     }
 
-    // 4 = synth4
+    // 4 = this.synth4
     if (p.keyCode === 52) {
-      currentSynth = otherBank ? synth2d : synth1d;
+      this.currentSynth = this.otherBank ? this.synth2d : this.synth1d;
     }
 
-    // 5 = synth5
+    // 5 = this.synth5
     if (p.keyCode === 53) {
-      currentSynth = otherBank ? synth2e : synth1e;
+      this.currentSynth = this.otherBank ? this.synth2e : this.synth1e;
     }
 
     // 7 = bank 1
     if (p.keyCode === 55) {
-      otherBank = false;
-      currentKick = bd1;
-      currentSnare = sd1;
-      currentSynth = synth1a;
+      this.otherBank = false;
+      this.currentKick = this.bd1;
+      this.currentSnare = this.sd1;
+      this.currentSynth = this.synth1a;
     }
 
     // 8 = bank 2
     if (p.keyCode === 56) {
-      otherBank = true;
-      currentKick = bd2;
-      currentSnare = sd2;
-      currentSynth = synth2a;
+      this.otherBank = true;
+      this.currentKick = this.bd2;
+      this.currentSnare = this.sd2;
+      this.currentSynth = this.synth2a;
     }
-  };
+  }
 
-  function drawTriangle(sizeX, sizeY) {
+  drawTriangle(p, sizeX, sizeY) {
     p.beginShape();
 
     p.vertex(-sizeX, sizeY, 0);
