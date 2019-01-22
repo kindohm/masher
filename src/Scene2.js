@@ -15,14 +15,13 @@ export default class Scene2 {
 
   constructor(allSounds) {
     this.sounds = allSounds.like;
+
   }
 
-  preload(p) {
+  setup(p) {
     this.halfPi = p.PI / 2;
     this.negHalfPi = -p.PI / 2;
   }
-
-  setup(p) {}
 
   update(p) {
     const rotationScale = p.map(p.mouseY, p.height, 0, 0, 0.0625);

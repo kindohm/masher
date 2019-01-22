@@ -25,9 +25,6 @@ export default class Scene3 {
   constructor(allSounds) {
     this.sounds = allSounds.friend;
     this.drawTriangle = this.drawTriangle.bind(this);
-  }
-
-  preload(p) {
     this.currentSynth = this.sounds.synth1a;
     this.currentKick = this.sounds.bd1;
     this.currentSnare = this.sounds.sd1;

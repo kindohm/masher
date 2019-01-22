@@ -15,15 +15,12 @@ export default class Scene1 {
   constructor(allSounds) {
     this.sounds = allSounds.dis;
     this.trigger = this.trigger.bind(this);
-    this.preload = this.preload.bind(this);
-  }
-
-  preload(p) {}
-
-  setup(p) {
     this.currentDrum = this.sounds.drum2;
     this.currentAccent = this.sounds.drum2Accent;
     this.currentSynth = this.sounds.synth1;
+  }
+
+  setup(p) {
   }
 
   update(p) {

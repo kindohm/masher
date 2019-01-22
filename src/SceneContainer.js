@@ -15,7 +15,6 @@ export default function SceneContainer(p) {
     [new Scene1(sounds), new Scene2(sounds), new Scene3(sounds)].forEach(
       scene => {
         scene.setup(p);
-        scene.preload(p);
         scenes[scene.name] = scene;
       }
     );
