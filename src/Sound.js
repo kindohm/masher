@@ -16,6 +16,16 @@ import LikeBd1 from './sounds/like/bd1.mp3';
 import LikeBd2 from './sounds/like/bd2.mp3';
 import LikeCp1 from './sounds/like/cp1.mp3';
 import LikeCp2 from './sounds/like/cp2.mp3';
+import LikeSynth1a from './sounds/like/synth1a.mp3'
+import LikeSynth1b from './sounds/like/synth1b.mp3'
+import LikeSynth1c from './sounds/like/synth1c.mp3'
+import LikeSynth1d from './sounds/like/synth1d.mp3'
+import LikeSynth1e from './sounds/like/synth1e.mp3'
+import LikeSynth2a from './sounds/like/synth2a.mp3'
+import LikeSynth2b from './sounds/like/synth2b.mp3'
+import LikeSynth2c from './sounds/like/synth2c.mp3'
+import LikeSynth2d from './sounds/like/synth2d.mp3'
+import LikeSynth2e from './sounds/like/synth2e.mp3'
 
 import FriendBd1 from './sounds/friend/bd01.mp3';
 import FriendSd1 from './sounds/friend/sd01.mp3';
@@ -58,7 +68,17 @@ const getSounds = p => {
       bd1: makeSound(p, LikeBd1),
       bd2: makeSound(p, LikeBd2),
       cp1: makeSound(p, LikeCp1),
-      cp2: makeSound(p, LikeCp2)
+      cp2: makeSound(p, LikeCp2),
+      synth1a: makeSound(p, LikeSynth1a),
+      synth1b: makeSound(p, LikeSynth1b),
+      synth1c: makeSound(p, LikeSynth1c),
+      synth1d: makeSound(p, LikeSynth1d),
+      synth1e: makeSound(p, LikeSynth1e),
+      synth2a: makeSound(p, LikeSynth2a),
+      synth2b: makeSound(p, LikeSynth2b),
+      synth2c: makeSound(p, LikeSynth2c),
+      synth2d: makeSound(p, LikeSynth2d),
+      synth2e: makeSound(p, LikeSynth2e)
     },
     friend: {
       bd1: makeSound(p, FriendBd1),
