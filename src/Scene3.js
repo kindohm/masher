@@ -140,67 +140,6 @@ export default class Scene3 {
     this.playingSynth = this.currentSynth;
   }
 
-  keyPressed(p) {
-    if (p.keyCode === 90) {
-      return this.trigger({ accent: false });
-    }
-
-    if (p.keyCode === 88) {
-      return this.trigger({ accent: true });
-    }
-
-    // 1 = synth1
-    if (p.keyCode === 49) {
-      this.currentSynth = this.otherBank
-        ? this.sounds.synth2a
-        : this.sounds.synth1a;
-    }
-
-    // 2 = synth2
-    if (p.keyCode === 50) {
-      this.currentSynth = this.otherBank
-        ? this.sounds.synth2b
-        : this.sounds.synth1b;
-    }
-
-    // 3 = this.sounds.synth3
-    if (p.keyCode === 51) {
-      this.currentSynth = this.otherBank
-        ? this.sounds.synth2c
-        : this.sounds.synth1c;
-    }
-
-    // 4 = this.sounds.synth4
-    if (p.keyCode === 52) {
-      this.currentSynth = this.otherBank
-        ? this.sounds.synth2d
-        : this.sounds.synth1d;
-    }
-
-    // 5 = this.sounds.synth5
-    if (p.keyCode === 53) {
-      this.currentSynth = this.otherBank
-        ? this.sounds.synth2e
-        : this.sounds.synth1e;
-    }
-
-    // 7 = bank 1
-    if (p.keyCode === 55) {
-      this.otherBank = false;
-      this.currentKick = this.sounds.bd1;
-      this.currentSnare = this.sounds.sd1;
-      this.currentSynth = this.sounds.synth1a;
-    }
-
-    // 8 = bank 2
-    if (p.keyCode === 56) {
-      this.otherBank = true;
-      this.currentKick = this.sounds.bd2;
-      this.currentSnare = this.sounds.sd2;
-      this.currentSynth = this.sounds.synth2a;
-    }
-  }
-
   drawTriangle(p, sizeX, sizeY) {
     p.beginShape();
 
@@ -221,5 +160,53 @@ export default class Scene3 {
     p.vertex(0, -sizeY, 0);
 
     p.endShape();
+  }
+
+  hit() {
+    this.trigger({ accent: false });
+  }
+
+  accent() {
+    this.trigger({ accent: true });
+  }
+
+  changePatch() {
+    if (this.otherBank) {
+      this.currentSynth = this.currentSynth =
+        this.currentSynth === this.sounds.synth2a
+          ? this.sounds.synth2b
+          : this.currentSynth === this.sounds.synth2b
+          ? this.sounds.synth2c
+          : this.currentSynth === this.sounds.synth2c
+          ? this.sounds.synth2d
+          : this.currentSynth === this.sounds.synth2d
+          ? this.sounds.synth2e
+          : this.sounds.synth2a;
+    } else {
+      this.currentSynth =
+        this.currentSynth === this.sounds.synth1a
+          ? this.sounds.synth1b
+          : this.currentSynth === this.sounds.synth1b
+          ? this.sounds.synth1c
+          : this.currentSynth === this.sounds.synth1c
+          ? this.sounds.synth1d
+          : this.currentSynth === this.sounds.synth1d
+          ? this.sounds.synth1e
+          : this.sounds.synth1a;
+    }
+  }
+
+  changeBank() {
+    this.currentKick =
+      this.currentKick === this.sounds.bd1 ? this.sounds.bd2 : this.sounds.bd1;
+
+    this.currentSnare =
+      this.currentSnare === this.sounds.sd1 ? this.sounds.sd2 : this.sounds.sd1;
+
+    this.currentSynth = this.otherBank
+      ? this.sounds.synth1a
+      : this.sounds.synth2a;
+
+    this.otherBank = !this.otherBank;
   }
 }

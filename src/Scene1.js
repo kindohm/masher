@@ -20,8 +20,7 @@ export default class Scene1 {
     this.currentSynth = this.sounds.synth1;
   }
 
-  setup(p) {
-  }
+  setup(p) {}
 
   update(p) {
     const rotationScale = p.map(p.mouseY, p.height, 0, 0, 1);
@@ -130,56 +129,40 @@ export default class Scene1 {
     this.lastTriggeredSynth = this.currentSynth;
   }
 
-  keyPressed(p) {
-    if (p.keyCode === 90) {
-      return this.trigger({ accent: false });
-    }
+  hit() {
+    this.trigger({ accent: false });
+  }
 
-    if (p.keyCode === 88) {
-      return this.trigger({ accent: true });
-    }
+  accent() {
+    this.trigger({ accent: true });
+  }
 
-    // 1 = synth1
-    if (p.keyCode === 49) {
-      this.currentSynth = this.sounds.synth1;
-    }
+  changePatch() {
+    this.currentSynth =
+      this.currentSynth === this.sounds.synth1
+        ? this.sounds.synth2
+        : this.currentSynth === this.sounds.synth2
+        ? this.sounds.synth3
+        : this.currentSynth === this.sounds.synth3
+        ? this.sounds.synth4
+        : this.currentSynth === this.sounds.synth4
+        ? this.sounds.synth5
+        : this.sounds.synth1;
+  }
 
-    // 2 = synth2
-    if (p.keyCode === 50) {
-      this.currentSynth = this.sounds.synth2;
-    }
+  changeBank() {
+    this.currentDrum =
+      this.currentDrum === this.sounds.drum1
+        ? this.sounds.drum2
+        : this.currentDrum === this.sounds.drum2
+        ? this.sounds.drum3
+        : this.sounds.drum1;
 
-    // 3 = synth3
-    if (p.keyCode === 51) {
-      this.currentSynth = this.sounds.synth3;
-    }
-
-    // 4 = synth4
-    if (p.keyCode === 52) {
-      this.currentSynth = this.sounds.synth4;
-    }
-
-    // 5 = synth5
-    if (p.keyCode === 53) {
-      this.currentSynth = this.sounds.synth5;
-    }
-
-    // 7 = drum2 (snare)
-    if (p.keyCode === 55) {
-      this.currentDrum = this.sounds.drum2;
-      this.currentAccent = this.sounds.drum2Accent;
-    }
-
-    // 8 = drum3 (rimshot)
-    if (p.keyCode === 56) {
-      this.currentDrum = this.sounds.drum3;
-      this.currentAccent = this.sounds.drum3Accent;
-    }
-
-    // 9 = drum1 (kick drum)
-    if (p.keyCode === 57) {
-      this.currentDrum = this.sounds.drum1;
-      this.currentAccent = this.sounds.drum1Accent;
-    }
+    this.currentAccent =
+      this.currentAccent === this.sounds.drum1Accent
+        ? this.sounds.drum2Accent
+        : this.currentAccent === this.sounds.drum2Accent
+        ? this.sounds.drum3Accent
+        : this.sounds.drum1Accent;
   }
 }

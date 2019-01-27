@@ -6,22 +6,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { scene: 'scene1' };
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  handleMouseDown() {
-    this.setState({
-      scene:
-        this.state.scene === 'scene1'
+  handleKeyDown(event) {
+    if (event.keyCode === 32) {
+      const currentScene = this.state.scene;
+      const newScene =
+        currentScene === 'scene1'
           ? 'scene2'
-          : this.state.scene === 'scene2'
+          : currentScene === 'scene2'
           ? 'scene3'
-          : 'scene1'
-    });
+          : 'scene1';
+      this.setState({ scene: newScene });
+    }
   }
 
   render() {
     return (
-      <div onMouseDown={this.handleMouseDown.bind(this)}>
+      <div tabIndex="0" onKeyDown={this.handleKeyDown}>
         <P5Wrapper sketch={SceneContainer} scene={this.state.scene} />
       </div>
     );

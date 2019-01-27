@@ -2,6 +2,12 @@ import Scene1 from './Scene1';
 import Scene2 from './Scene2';
 import Scene3 from './Scene3';
 import { getSounds } from './Sound';
+import KeyCodes from './KeyCodes';
+
+const HIT = KeyCodes.F;
+const ACCENT = KeyCodes.D;
+const CHANGE_BANK = KeyCodes.E;
+const CHANGE_PATCH = KeyCodes.R;
 
 export default function SceneContainer(p) {
   let scenes = {};
@@ -38,6 +44,22 @@ export default function SceneContainer(p) {
   };
 
   p.keyPressed = () => {
-    scenes[currentScene].keyPressed(p);
+    const scene = scenes[currentScene];
+
+    if (p.keyCode === HIT) {
+      scene.hit(p);
+    }
+
+    if (p.keyCode === ACCENT) {
+      scene.accent(p);
+    }
+
+    if (p.keyCode === CHANGE_PATCH) {
+      scene.changePatch();
+    }
+
+    if (p.keyCode === CHANGE_BANK) {
+      scene.changeBank();
+    }
   };
 }

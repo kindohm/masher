@@ -11,28 +11,34 @@ export default class Scene2 {
   nodes;
   index;
   cameraRotation = 0;
-  otherBank;
   randSynths1 = [];
   randSynths2 = [];
+  currentDrum;
+  currentAccent;
+  currentSynthBank;
   playingSynth;
 
   constructor(allSounds) {
     this.sounds = allSounds.like;
-    this.randSynths1.push(this.sounds.synth1a)
-    this.randSynths1.push(this.sounds.synth1b)
-    this.randSynths1.push(this.sounds.synth1c)
-    this.randSynths1.push(this.sounds.synth1d)
-    this.randSynths1.push(this.sounds.synth1e)
-    this.randSynths2.push(this.sounds.synth2a)
-    this. randSynths2.push(this.sounds.synth2b)
-    this.randSynths2.push(this.sounds.synth2c)
-    this.randSynths2.push(this.sounds.synth2d)
-    this.randSynths2.push(this.sounds.synth2e)
+    this.randSynths1.push(this.sounds.synth1a);
+    this.randSynths1.push(this.sounds.synth1b);
+    this.randSynths1.push(this.sounds.synth1c);
+    this.randSynths1.push(this.sounds.synth1d);
+    this.randSynths1.push(this.sounds.synth1e);
+    this.randSynths2.push(this.sounds.synth2a);
+    this.randSynths2.push(this.sounds.synth2b);
+    this.randSynths2.push(this.sounds.synth2c);
+    this.randSynths2.push(this.sounds.synth2d);
+    this.randSynths2.push(this.sounds.synth2e);
   }
 
   setup(p) {
     this.halfPi = p.PI / 2;
     this.negHalfPi = -p.PI / 2;
+
+    this.currentDrum = this.sounds.bd1;
+    this.currentAccent = this.sounds.cp1;
+    this.currentSynthBank = this.randSynths1;
   }
 
   update(p) {
@@ -151,47 +157,45 @@ export default class Scene2 {
     this.nodes[this.index] = newNode;
     this.index++;
 
-    if (this.playingSynth){
-      this.playingSynth.stop()
+    if (this.playingSynth) {
+      this.playingSynth.stop();
     }
 
+    this.playingSynth = this.randSynths2[
+      getRandomIntInclusive(0, this.currentSynthBank.length - 1)
+    ];
+
     if (accent) {
-      if (this.otherBank) {
-        this.sounds.cp2.play();
-        this.playingSynth = this.randSynths2[getRandomIntInclusive(0, this.randSynths2.length-1)]
-      } else {
-        this.sounds.cp1.play();
-        this.playingSynth = this.randSynths1[getRandomIntInclusive(0, this.randSynths1.length-1)]
-      }
+      this.currentAccent.play();
     } else {
-      if (this.otherBank) {
-        this.sounds.bd2.play();
-        this.playingSynth = this.randSynths2[getRandomIntInclusive(0, this.randSynths2.length-1)]
-      } else {
-        this.sounds.bd1.play();
-        this.playingSynth = this.randSynths1[getRandomIntInclusive(0, this.randSynths1.length-1)]
-      }
+      this.currentDrum.play();
     }
+
     this.playingSynth.play();
   }
 
-  keyPressed(p) {
-    if (p.keyCode === 90) {
-      return this.trigger({ accent: false, p });
-    }
+  hit(p) {
+    this.trigger({ accent: false, p });
+  }
 
-    if (p.keyCode === 88) {
-      return this.trigger({ accent: true, p });
-    }
+  accent(p) {
+    this.trigger({ accent: true, p });
+  }
 
-    // 1 = bank1
-    if (p.keyCode === 49) {
-      this.otherBank = false;
-    }
+  changePatch() {}
 
-    // 2 = bank2
-    if (p.keyCode === 50) {
-      this.otherBank = true;
-    }
+  changeBank() {
+    this.currentDrum =
+      this.currentDrum === this.sounds.bd1 ? this.sounds.bd2 : this.sounds.bd1;
+
+    this.currentAccent =
+      this.currentAccent === this.sounds.cp1
+        ? this.sounds.cp2
+        : this.sounds.cp1;
+
+    this.currentSynthBank =
+      this.currentSynthBank === this.randSynths1
+        ? this.randSynths2
+        : this.randSynths1;
   }
 }

@@ -1,0 +1,6 @@
+- command to switch to the next bank
+- command to switch to the next patch in the bank
+- command for a main hit
+- command for an accent hit
+- mouse x/y input
+- command to change scenes
