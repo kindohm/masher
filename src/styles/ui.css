@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css?family=Major+Mono+Display');
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ui-overlay--container {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+
+  padding: 20px;
+
+  text-align: center;
+  color: green;
+  font-size: 26px;
+  font-family: 'Major Mono Display', monospace;
+}
+
+.ui-overlay--container h1 {
+  margin: 20px 0;
+  font-size: 48px;
+}
+
+.ui-overlay--button {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 20px;
+  margin-right: 50px;
+}
+
+.ui-overlay--button:last-of-type {
+  margin-right: 0;
+}
+
+.ui-overlay--button span {
+  position: absolute;
+  margin-left: -40px;
+  margin-top: -10px;
+  transform: rotate(-45deg);
+}
+
+.ui-overlay--box {
+  display: inline-block;
+  padding: 20px 14px;
+  border-radius: 5px;
+}
