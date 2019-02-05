@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
+import UIOverlayButton from './UIOverlayButton';
 import './styles/ui.css';
 
 class UIOverlay extends PureComponent {
+  // D----R--------YYYYYY
   state = {
     r: Math.floor(Math.random() * 192) + 63,
     g: Math.floor(Math.random() * 192) + 63,
@@ -21,12 +23,44 @@ class UIOverlay extends PureComponent {
   }
 
   render() {
+    const color = `rgba(${this.state.r}, ${this.state.g}, ${this.state.b}, 1)`;
+
     return (
       <div
         className="ui-overlay--container"
-        style={{color: `rgba(${this.state.r}, ${this.state.g}, ${this.state.b}, 1)`}}
+        style={{color: color}}
       >
-        KINDOHM
+        <UIOverlayButton
+          caption="BANG"
+          content="D"
+          color={`1px solid ${color}`}
+        />
+
+        <UIOverlayButton
+          caption="BANG"
+          content="F"
+          color={`1px solid ${color}`}
+        />
+
+        <UIOverlayButton
+          caption="CHANGE"
+          content="E"
+          color={`1px solid ${color}`}
+        />
+
+        <UIOverlayButton
+          caption="CHANGE"
+          content="R"
+          color={`1px solid ${color}`}
+        />
+
+        <UIOverlayButton
+          caption="NEXT"
+          content="SPACE"
+          color={`1px solid ${color}`}
+        />
+
+        <h1>KINDOHM</h1>
       </div>
     );
   }

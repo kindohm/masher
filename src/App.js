@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import P5Wrapper from 'react-p5-wrapper';
 import SceneContainer from './SceneContainer';
+
+import './styles/reset.css';
+
 import UIOverlay from './UIOverlay';
 
 class App extends Component {
