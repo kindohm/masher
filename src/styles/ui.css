@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Major+Mono+Display');
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ui-overlay--container {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+
+  padding: 20px;
+
+  text-align: center;
+  color: green;
+  font-family: 'Major Mono Display', monospace;
+  font-size: 48px;
+}
