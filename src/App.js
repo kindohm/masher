@@ -12,7 +12,11 @@ class App extends Component {
     this.state = { scene: 'scene1' };
   }
 
-  handleKeyDown = (event) => {
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = event => {
     if (event.keyCode === 32) {
       const currentScene = this.state.scene;
       const newScene =
@@ -23,7 +27,7 @@ class App extends Component {
           : 'scene1';
       this.setState({ scene: newScene });
     }
-  }
+  };
 
   render() {
     return (
