@@ -209,4 +209,8 @@ export default class Scene3 {
 
     this.otherBank = !this.otherBank;
   }
+
+  silence() {
+    this.playingSynth && this.playingSynth.stop();
+  }
 }

@@ -198,4 +198,8 @@ export default class Scene2 {
         ? this.randSynths2
         : this.randSynths1;
   }
+
+  silence() {
+    this.playingSynth && this.playingSynth.stop();
+  }
 }

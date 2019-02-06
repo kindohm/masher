@@ -165,4 +165,8 @@ export default class Scene1 {
         ? this.sounds.drum3Accent
         : this.sounds.drum1Accent;
   }
+
+  silence() {
+    this.lastTriggeredSynth && this.lastTriggeredSynth.stop();
+  }
 }

@@ -11,7 +11,8 @@ const CHANGE_PATCH = KeyCodes.R;
 
 export default function SceneContainer(p) {
   let scenes = {};
-  let currentScene = 'scene1';
+  let currentSceneName = 'scene1';
+  let previousSceneName;
 
   p.preload = () => {
     p.soundFormats('mp3');
@@ -31,7 +32,8 @@ export default function SceneContainer(p) {
   };
 
   p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
-    currentScene = props.scene;
+    previousSceneName = currentSceneName;
+    currentSceneName = props.scene;
   };
 
   const update = scene => {
@@ -39,18 +41,21 @@ export default function SceneContainer(p) {
   };
 
   p.draw = () => {
-    update(scenes[currentScene]);
-    scenes[currentScene].draw(p);
+    update(scenes[currentSceneName]);
+    scenes[currentSceneName].draw(p);
   };
 
   p.keyPressed = () => {
-    const scene = scenes[currentScene];
+    const scene = scenes[currentSceneName];
+    const previousScene = previousSceneName ? scenes[previousSceneName] : null;
 
     if (p.keyCode === HIT) {
+      previousScene && previousScene.silence();
       scene.hit(p);
     }
 
     if (p.keyCode === ACCENT) {
+      previousScene && previousScene.silence();
       scene.accent(p);
     }
 
