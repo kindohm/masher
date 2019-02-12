@@ -5,6 +5,7 @@ import SceneContainer from './SceneContainer';
 import './styles/reset.css';
 
 import UIOverlay from './UIOverlay';
+import MobileUIOverlay from './MobileUIOverlay';
 import Logo from './Logo';
 
 class App extends Component {
@@ -30,10 +31,24 @@ class App extends Component {
     }
   };
 
+  handleTouch = (event) => {
+    if (event === 'next') {
+      const currentScene = this.state.scene;
+      const newScene =
+        currentScene === 'scene1'
+          ? 'scene2'
+          : currentScene === 'scene2'
+          ? 'scene3'
+          : 'scene1';
+      this.setState({ scene: newScene });
+    }
+  }
+
   render() {
     return (
       <div tabIndex="0" onKeyDown={this.handleKeyDown}>
         <P5Wrapper sketch={SceneContainer} scene={this.state.scene} />
+        <MobileUIOverlay handleTouch={this.handleTouch} />
         <Logo />
         <UIOverlay />
       </div>

@@ -72,4 +72,32 @@ export default function SceneContainer(p) {
       scene.changeBank();
     }
   };
+
+  p.touchStarted = () => {
+    const scene = scenes[currentSceneName];
+    const previousScene = previousSceneName ? scenes[previousSceneName] : null;
+
+    const halfWidth = window.innerWidth / 2;
+    const thirdishHeight = window.innerHeight / 100 * 40;
+
+    if (p.mouseX < halfWidth && p.mouseY < thirdishHeight) {
+      scene.changeBank();
+    }
+
+    if (p.mouseX > halfWidth && p.mouseY < thirdishHeight) {
+      scene.changePatch();
+    }
+
+    if (p.mouseX < halfWidth && p.mouseY > thirdishHeight) {
+      previousScene && previousScene.silence();
+      scene.accent(p);
+      return false;
+    }
+
+    if (p.mouseX > halfWidth && p.mouseY > thirdishHeight) {
+      previousScene && previousScene.silence();
+      scene.hit(p);
+      return false;
+    }
+  }
 }
