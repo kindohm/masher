@@ -5,6 +5,7 @@ import SceneContainer from './SceneContainer';
 import './styles/reset.css';
 
 import UIOverlay from './UIOverlay';
+import Logo from './Logo';
 
 class App extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class App extends Component {
     return (
       <div tabIndex="0" onKeyDown={this.handleKeyDown}>
         <P5Wrapper sketch={SceneContainer} scene={this.state.scene} />
+        <Logo />
         <UIOverlay />
       </div>
     );

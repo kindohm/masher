@@ -1,0 +1,12 @@
+.logo--container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  padding: 30px;
+}
+
+img {
+  max-width: 60px;
+}
