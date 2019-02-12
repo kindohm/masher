@@ -18,6 +18,12 @@
   font-family: 'Major Mono Display', monospace;
 }
 
+@media (max-width: 610px) {
+  .ui-overlay--container {
+    display: none;
+  }
+}
+
 .ui-overlay--container h1 {
   margin: 20px 0;
   font-size: 48px;
@@ -46,3 +52,52 @@
   padding: 20px 14px;
   border-radius: 5px;
 }
+
+.mobile-ui--container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  background: transparent;
+
+  font-family: 'Major Mono Display', monospace;
+  font-size: 24px;
+  color: white;
+  text-align: center;
+
+  opacity: 1;
+  transition: opacity 5s;
+}
+
+@media (min-width: 610px) {
+  .mobile-ui--container {
+    display: none;
+  }
+}
+
+.mobile-ui--controls {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.row {
+  flex-grow: 1;
+  border-bottom: 1px solid #666;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.zone {
+  flex-grow: 1;
+}
+
+.row:last-of-type {
+  flex-grow: 0;
+  padding: 30px;
+}
+
