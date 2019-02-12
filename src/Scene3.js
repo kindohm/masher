@@ -1,16 +1,18 @@
 import 'p5/lib/addons/p5.sound';
 
 const baseSize = 75;
-const cellSize = 120;
-const rowCount = 4;
-const colCount = 4;
-const slotCount = 4;
+const cellSize = 150;
+const rowCount = 3;
+const colCount = 3;
+const slotCount = 3;
+const colorInc = 0.001;
 
 const standardXTranslation = ((colCount - 1) * -cellSize) / 2;
 const standardYTransltion = ((slotCount - 1) * -cellSize) / 2;
 const standardZTranslation = ((rowCount - 1) * -cellSize) / 2;
 
 export default class Scene3 {
+  colorSlice = 0;
   name = 'scene3';
   rows;
   cameraRotX = 0;
@@ -52,6 +54,7 @@ export default class Scene3 {
           if (!cell) continue;
           cell.rotation += rotationScale;
           cell.size += growthScale;
+          cell.triSize += growthScale;
         }
       }
     }
@@ -66,7 +69,6 @@ export default class Scene3 {
     let cell;
 
     p.ambientMaterial(0, 0, 0);
-    p.stroke(0, 0, 255);
 
     p.rotateX(this.cameraRotX);
     p.rotateY(this.cameraRotY);
@@ -82,10 +84,11 @@ export default class Scene3 {
         for (let s = 0; s < slotCount; s++) {
           cell = this.rows[r][c][s];
           if (!cell) continue;
+          this.doColor(p, this.otherBank, cell.high);
           p.translate(c * cellSize, r * cellSize, s * cellSize);
           p.rotateX(cell.rotation);
           if (cell.high) {
-            this.drawTriangle(p, cell.size, cell.size);
+            this.drawTriangle(p, cell.triSize, cell.triSize);
           } else {
             p.box(cell.size, cell.size, 1);
           }
@@ -105,7 +108,25 @@ export default class Scene3 {
     );
   }
 
+  doColor(p, otherBank, high) {
+    if (!otherBank) {
+      if (high) {
+        p.stroke(255, 255, 0);
+      } else {
+        p.stroke(0, 255, 255);
+      }
+    } else {
+      this.colorSlice += colorInc;
+      p.stroke(
+        p.noise(1, this.colorSlice) * 255,
+        p.noise(2, this.colorSlice) * 255,
+        p.noise(3, this.colorSlice) * 255
+      );
+    }
+  }
+
   reset({ accent }) {
+    this.colorSlice += 100;
     this.cameraRotX = 0;
     this.cameraRotY = 0;
     this.cameraRotZ = 0;
@@ -115,6 +136,7 @@ export default class Scene3 {
         for (let s = 0; s < slotCount; s++) {
           this.rows[r][c][s] = {
             size: baseSize,
+            triSize: baseSize / 1.5,
             rotation: 0,
             high: accent
           };

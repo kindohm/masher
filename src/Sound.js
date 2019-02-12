@@ -16,16 +16,16 @@ import LikeBd1 from './sounds/like/bd1.mp3';
 import LikeBd2 from './sounds/like/bd2.mp3';
 import LikeCp1 from './sounds/like/cp1.mp3';
 import LikeCp2 from './sounds/like/cp2.mp3';
-import LikeSynth1a from './sounds/like/synth1a.mp3'
-import LikeSynth1b from './sounds/like/synth1b.mp3'
-import LikeSynth1c from './sounds/like/synth1c.mp3'
-import LikeSynth1d from './sounds/like/synth1d.mp3'
-import LikeSynth1e from './sounds/like/synth1e.mp3'
-import LikeSynth2a from './sounds/like/synth2a.mp3'
-import LikeSynth2b from './sounds/like/synth2b.mp3'
-import LikeSynth2c from './sounds/like/synth2c.mp3'
-import LikeSynth2d from './sounds/like/synth2d.mp3'
-import LikeSynth2e from './sounds/like/synth2e.mp3'
+import LikeSynth1a from './sounds/like/synth1a.mp3';
+import LikeSynth1b from './sounds/like/synth1b.mp3';
+import LikeSynth1c from './sounds/like/synth1c.mp3';
+import LikeSynth1d from './sounds/like/synth1d.mp3';
+import LikeSynth1e from './sounds/like/synth1e.mp3';
+import LikeSynth2a from './sounds/like/synth2a.mp3';
+import LikeSynth2b from './sounds/like/synth2b.mp3';
+import LikeSynth2c from './sounds/like/synth2c.mp3';
+import LikeSynth2d from './sounds/like/synth2d.mp3';
+import LikeSynth2e from './sounds/like/synth2e.mp3';
 
 import FriendBd1 from './sounds/friend/bd01.mp3';
 import FriendSd1 from './sounds/friend/sd01.mp3';
@@ -44,7 +44,7 @@ import FriendSynth2e from './sounds/friend/synth2e.mp3';
 
 const makeSound = (p, sound) => {
   let pSound = p.loadSound(sound);
-  pSound.setVolume(0.95);
+  pSound.setVolume(0.8);
   pSound.playMode('restart');
   return pSound;
 };
