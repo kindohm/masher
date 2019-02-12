@@ -6,6 +6,7 @@ import './styles/reset.css';
 
 import UIOverlay from './UIOverlay';
 import MobileUIOverlay from './MobileUIOverlay';
+import Logo from './Logo';
 
 class App extends Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class App extends Component {
       <div tabIndex="0" onKeyDown={this.handleKeyDown}>
         <P5Wrapper sketch={SceneContainer} scene={this.state.scene} />
         <MobileUIOverlay handleTouch={this.handleTouch} />
+        <Logo />
         <UIOverlay />
       </div>
     );

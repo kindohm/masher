@@ -45,6 +45,11 @@ export default function SceneContainer(p) {
     scenes[currentSceneName].draw(p);
   };
 
+  p.windowResized = () => {
+    p.resizeCanvas(window.innerWidth, window.innerHeight, p.WEGL);
+  }
+
+
   p.keyPressed = () => {
     const scene = scenes[currentSceneName];
     const previousScene = previousSceneName ? scenes[previousSceneName] : null;
