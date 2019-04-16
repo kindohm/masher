@@ -2,34 +2,35 @@ import React, { PureComponent } from 'react';
 import UIOverlayButton from './UIOverlayButton';
 import './styles/ui.css';
 
+const makeAColor = () => {
+  return Math.floor(Math.random() * 192) + 63;
+};
+
 class UIOverlay extends PureComponent {
   // D----R--------YYYYYY
   state = {
-    r: Math.floor(Math.random() * 192) + 63,
-    g: Math.floor(Math.random() * 192) + 63,
-    b: Math.floor(Math.random() * 192) + 63,
-  }
+    r: makeAColor(),
+    g: makeAColor(),
+    b: makeAColor()
+  };
 
   componentDidMount() {
-    document.addEventListener("keydown", this.colorChange);
+    document.addEventListener('keydown', this.colorChange);
   }
 
   colorChange = () => {
     this.setState({
-      r: Math.floor(Math.random() * 192) + 63,
-      g: Math.floor(Math.random() * 192) + 63,
-      b: Math.floor(Math.random() * 192) + 63,
+      r: makeAColor(),
+      g: makeAColor(),
+      b: makeAColor()
     });
-  }
+  };
 
   render() {
     const color = `rgba(${this.state.r}, ${this.state.g}, ${this.state.b}, 1)`;
 
     return (
-      <div
-        className="ui-overlay--container"
-        style={{color: color}}
-      >
+      <div className="ui-overlay--container" style={{ color: color }}>
         <UIOverlayButton
           caption="BANG"
           content="D"
