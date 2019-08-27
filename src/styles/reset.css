@@ -41,3 +41,13 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+#p5_loading {
+  width: 100vw;
+  height: 100vh;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: blue;
+}
