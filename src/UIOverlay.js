@@ -26,7 +26,7 @@ const UIOverlay = () => {
   const color = `rgba(${red}, ${blue}, ${green}, 1)`
 
   return (
-    <div className="ui-overlay--container" style={{ color: color }}>
+    <div className="ui-overlay--container ui-overlay--active" style={{ color: color }}>
       <UIOverlayButton
         caption="BANG"
         content="D"
@@ -58,6 +58,8 @@ const UIOverlay = () => {
       />
 
       <h1>KINDOHM</h1>
+      <h2>MEME BOOTH</h2>
+      <h3>THE NEW ALBUM</h3>
     </div>
   )
 }

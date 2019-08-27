@@ -16,6 +16,13 @@
   color: green;
   font-size: 26px;
   font-family: 'Major Mono Display', monospace;
+
+  animation: fadein 1.2s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @media (max-width: 610px) {
