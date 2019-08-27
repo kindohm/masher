@@ -1,59 +1,56 @@
-import React, { Component } from 'react';
-import P5Wrapper from 'react-p5-wrapper';
-import SceneContainer from './SceneContainer';
+import React, { useEffect, useState }  from 'react'
+import P5Wrapper from 'react-p5-wrapper'
+import SceneContainer from './SceneContainer'
 
-import './styles/reset.css';
+import './styles/reset.css'
 
-import UIOverlay from './UIOverlay';
-import MobileUIOverlay from './MobileUIOverlay';
-import Logo from './Logo';
+import UIOverlay from './UIOverlay'
+import MobileUIOverlay from './MobileUIOverlay'
+import Logo from './Logo'
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { scene: 'scene1' };
-  }
+const App = () => {
+  const [scene, setScene] = useState('scene1')
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown)
 
-  handleKeyDown = event => {
+    return () => { document.removeEventListener('keydown', handleKeyDown) }
+  })
+
+  const handleKeyDown = event => {
     if (event.keyCode === 32) {
-      const currentScene = this.state.scene;
       const newScene =
-        currentScene === 'scene1'
+        scene === 'scene1'
           ? 'scene2'
-          : currentScene === 'scene2'
+          : scene === 'scene2'
           ? 'scene3'
-          : 'scene1';
-      this.setState({ scene: newScene });
-    }
-  };
+          : 'scene1'
 
-  handleTouch = (event) => {
+      setScene(newScene)
+    }
+  }
+
+  const handleTouch = (event) => {
     if (event === 'next') {
-      const currentScene = this.state.scene;
       const newScene =
-        currentScene === 'scene1'
+        scene === 'scene1'
           ? 'scene2'
-          : currentScene === 'scene2'
+          : scene === 'scene2'
           ? 'scene3'
           : 'scene1';
-      this.setState({ scene: newScene });
+
+      setScene(newScene)
     }
   }
 
-  render() {
-    return (
-      <div tabIndex="0" onKeyDown={this.handleKeyDown}>
-        <P5Wrapper sketch={SceneContainer} scene={this.state.scene} />
-        <MobileUIOverlay handleTouch={this.handleTouch} />
-        <Logo />
-        <UIOverlay />
-      </div>
-    );
-  }
+  return (
+    <div tabIndex="0" onKeyDown={handleKeyDown}>
+      <P5Wrapper sketch={SceneContainer} scene={scene} />
+      <MobileUIOverlay handleTouch={handleTouch} />
+      <Logo />
+      <UIOverlay />
+    </div>
+  )
 }
 
-export default App;
+export default App
