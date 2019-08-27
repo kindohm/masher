@@ -1,19 +1,17 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-class UIOverlayButton extends PureComponent {
-  render() {
-    return (
-      <div className="ui-overlay--button">
-        <span className="ui-overlay--caption">{this.props.caption}</span>
-        <div
-          className="ui-overlay--box"
-          style={{border: this.props.color}}
-        >
-          {this.props.content}
-        </div>
+const UIOverlayButton = ({ caption, color, content }) => {
+  return (
+    <div className="ui-overlay--button">
+      <span className="ui-overlay--caption">{caption}</span>
+      <div
+        className="ui-overlay--box"
+        style={{border: color}}
+      >
+        {content}
       </div>
-    );
-  }
+    </div>
+  )
 }
 
 export default UIOverlayButton;
