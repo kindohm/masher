@@ -59,7 +59,6 @@ const UIOverlay = () => {
 
       <h1>KINDOHM</h1>
       <h2>MEME BOOTH</h2>
-      <h3>THE NEW ALBUM</h3>
     </div>
   )
 }
