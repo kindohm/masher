@@ -117,6 +117,13 @@ export default class Scene1 {
           });
       });
 
+    if (  
+      this.lastTriggeredSynth &&
+      this.lastTriggeredSynth !== this.currentSynth
+    ) { 
+      this.lastTriggeredSynth.stop();
+    }
+
     accent ? this.currentAccent.play() : this.currentDrum.play();
     this.currentSynth.play();
     this.lastTriggeredSynth = this.currentSynth;
