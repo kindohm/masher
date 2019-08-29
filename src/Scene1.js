@@ -117,10 +117,10 @@ export default class Scene1 {
           });
       });
 
-    if (
+    if (  
       this.lastTriggeredSynth &&
       this.lastTriggeredSynth !== this.currentSynth
-    ) {
+    ) { 
       this.lastTriggeredSynth.stop();
     }
 
