@@ -45,7 +45,7 @@ import FriendSynth2e from './sounds/friend/synth2e.mp3';
 const makeSound = (p, sound) => {
   let pSound = p.loadSound(sound);
   pSound.setVolume(0.8);
-  pSound.playMode('restart');
+  pSound.playMode('sustain');
   return pSound;
 };
 
