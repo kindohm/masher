@@ -1,4 +1,4 @@
-import 'p5/lib/addons/p5.sound';
+import { Howl } from 'howler';
 
 import DisDrum1 from './sounds/dis/drum1.mp3';
 import DisDrum1Accent from './sounds/dis/drum1Accent.mp3';
@@ -43,10 +43,12 @@ import FriendSynth2d from './sounds/friend/synth2d.mp3';
 import FriendSynth2e from './sounds/friend/synth2e.mp3';
 
 const makeSound = (p, sound) => {
-  let pSound = p.loadSound(sound);
-  pSound.setVolume(0.8);
-  pSound.playMode('restart');
-  return pSound;
+  let hSound = new Howl({
+    src: [sound],
+    volume: 0.8,
+  });
+
+  return hSound;
 };
 
 const getSounds = p => {
